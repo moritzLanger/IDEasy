@@ -8,7 +8,7 @@ Opening `Local Security Policy` (`secpol.msc`) select `Local Policies`/`User Rig
 
 1. Right click `Create Symbolic Link`, to open `Propertys` and `add User`
 +
-|image::images/LocalSecurityPolicy.png[LocalSecurityPolicy]
+image::images/LocalSecurityPolicy.png[LocalSecurityPolicy]
 +
 2. Add the User who should gain the permissions, you might need to be connected to a VPN depending on the company settings.
 
