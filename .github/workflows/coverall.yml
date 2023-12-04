@@ -1,0 +1,10 @@
+on: ["push", "pull_request"]
+
+name: Coveralls
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Coveralls GitHub Action
+      uses: coverallsapp/github-action@v2.2.3
