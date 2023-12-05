@@ -16,7 +16,6 @@ jobs:
         run: mvn -B -ntp -Dstyle.color=always install
       - name: Coveralls GitHub Action
         uses: coverallsapp/github-action@v2.2.3
-        with: 
-          compare-ref: moritzLanger/IDEasy/blob/testPRBranch
+
 
 
