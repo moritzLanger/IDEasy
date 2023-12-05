@@ -1,8 +1,0 @@
-{
-  "java.home": "${IDE_HOME}/software/java",
-  "tslint.autoFixOnSave": true,
-  "object": {
-    "bar": "${IDE_HOME}/bar",
-    "array": ["a", "b", "${IDE_HOME}"]
-  }
-}
