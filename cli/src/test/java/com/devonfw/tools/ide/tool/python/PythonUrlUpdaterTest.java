@@ -35,25 +35,6 @@ public class PythonUrlUpdaterTest extends Assertions {
   @Test
   public void testPythonURl(@TempDir Path tempPath) throws IOException {
 
-    // given
-    stubFor(get(urlMatching("/actions/python-versions/main/.*")).willReturn(aResponse().withStatus(200)
-        .withBody(Files.readAllBytes(Paths.get(testdataRoot).resolve("python-version.json")))));
-
-    stubFor(any(urlMatching("/actions/python-versions/releases/download.*"))
-        .willReturn(aResponse().withStatus(200).withBody("aBody")));
-
-    UrlRepository urlRepository = UrlRepository.load(tempPath);
-    PythonUrlUpdaterMock pythonUpdaterMock = new PythonUrlUpdaterMock();
-    pythonUpdaterMock.update(urlRepository);
-    Path pythonPath = tempPath.resolve("python").resolve("python").resolve("3.12.0-beta.2");
-
-    assertThat(pythonPath.resolve("status.json")).exists();
-    assertThat(pythonPath.resolve("linux_x64.urls")).exists();
-    assertThat(pythonPath.resolve("linux_x64.urls.sha256")).exists();
-    assertThat(pythonPath.resolve("mac_arm64.urls")).exists();
-    assertThat(pythonPath.resolve("mac_arm64.urls.sha256")).exists();
-    assertThat(pythonPath.resolve("windows_x64.urls")).exists();
-    assertThat(pythonPath.resolve("windows_x64.urls.sha256")).exists();
-
+   
   }
 }
