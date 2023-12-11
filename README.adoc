@@ -10,7 +10,7 @@ image:https://img.shields.io/github/license/devonfw/IDEasy.svg?label=License["Ap
 image:https://img.shields.io/maven-central/v/com.devonfw.tools.ide/ide-cli.svg?label=Maven%20Central["Maven Central",link=https://search.maven.org/search?q=g:com.devonfw.tools.ide]
 image:https://github.com/devonfw/IDEasy/actions/workflows/build.yml/badge.svg["Build Status",link="https://github.com/devonfw/IDEasy/actions/workflows/build.yml"]
 image:https://github.com/devonfw/IDEasy/actions/workflows/update-urls.yml/badge.svg["Update URLS Status",link="https://github.com/devonfw/IDEasy/actions/workflows/update-urls.yml"]
-https://coveralls.io/repos/github/moritzLanger/IDEasy/badge.svg?branch=main(Coverage Status)!:https://coveralls.io/github/moritzLanger/IDEasy?branch=main
+image:https://coveralls.io/repos/github/moritzLanger/IDEasy/badge.svg?branch=main(Coverage Status)!:https://coveralls.io/github/moritzLanger/IDEasy?branch=main
 
 toc::[]
 
