@@ -8,6 +8,7 @@ public class CommandletManagerResetter {
   /**
    * Make {@link CommandletManagerImpl#reset()} visible for testing.
    */
+
   public static void reset() {
 
     CommandletManagerImpl.reset();

@@ -46,6 +46,11 @@ public final class HelpCommandlet extends Commandlet {
 
     return "help";
   }
+  
+  public String getNonCoverageName() {
+
+    return "notcovered";
+  }
 
   @Override
   public boolean isIdeHomeRequired() {
