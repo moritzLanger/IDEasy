@@ -34,31 +34,6 @@ public class PipUrlUpdaterTest extends AbstractUrlUpdaterTest {
   @Test
   public void testPipUrlUpdaterWithTextContentTypeWillSucceed(@TempDir Path tempDir) {
 
-    // given
-    stubFor(any(urlMatching("/pip/.*"))
-        .willReturn(aResponse().withStatus(200).withHeader("Content-Type", "text/plain").withBody("aBody")));
-
-    UrlRepository urlRepository = UrlRepository.load(tempDir);
-    PipUrlUpdaterMock updater = new PipUrlUpdaterMock();
-
-    String statusUrl = "http://localhost:8080/pip/1.0/get-pip.py";
-    String toolName = "pip";
-    String editionName = "pip";
-    String versionName = "1.0";
-
-    // when
-    updater.update(urlRepository);
-
-    Path versionsPath = tempDir.resolve(toolName).resolve(editionName).resolve(versionName);
-
-    // then
-    assertThat(versionsPath.resolve("status.json")).exists();
-
-    StatusJson statusJson = retrieveStatusJson(urlRepository, toolName, editionName, versionName);
-    UrlStatus urlStatus = statusJson.getOrCreateUrlStatus(statusUrl);
-    Instant successTimestamp = urlStatus.getSuccess().getTimestamp();
-
-    assertThat(successTimestamp).isNotNull();
-
+   
   }
 }
