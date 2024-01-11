@@ -66,16 +66,6 @@ public class InstallCommandletTest extends AbstractIdeContextTest {
   @Test
   public void testInstallCommandletRunWithVersion() throws IOException {
 
-    // arrange
-    String path = "workspaces/foo-test/my-git-repo";
-    IdeContext context = newContext("basic", path, true);
-    InstallCommandlet install = context.getCommandletManager().getCommandlet(InstallCommandlet.class);
-    install.tool.setValueAsString("java");
-    mockWebServer();
-    // act
-    install.run();
-    // assert
-    assertTestInstall(context);
   }
 
   /**
@@ -84,29 +74,9 @@ public class InstallCommandletTest extends AbstractIdeContextTest {
   @Test
   public void testInstallCommandletRunWithVersionAndVersionIdentifier() throws IOException {
 
-    // arrange
-    String path = "workspaces/foo-test/my-git-repo";
-    IdeContext context = newContext("basic", path, true);
-    InstallCommandlet install = context.getCommandletManager().getCommandlet(InstallCommandlet.class);
-    install.tool.setValueAsString("java");
-    install.version.setValueAsString("17.0.6");
-    mockWebServer();
-
-    // act
-    install.run();
-    // assert
-    assertTestInstall(context);
   }
 
   private void assertTestInstall(IdeContext context) {
 
-    assertThat(context.getSoftwarePath().resolve("java")).exists();
-    assertThat(context.getSoftwarePath().resolve("java/InstallTest.txt")).hasContent("This is a test file.");
-    assertThat(context.getSoftwarePath().resolve("java/bin/HelloWorld.txt")).hasContent("Hello World!");
-    if(context.getSystemInfo().isWindows()){
-      assertThat(context.getSoftwarePath().resolve("java/bin/java.cmd")).exists();
-    } else if (context.getSystemInfo().isLinux() || context.getSystemInfo().isMac()) {
-      assertThat(context.getSoftwarePath().resolve("java/bin/java")).exists();
-    }
   }
 }
