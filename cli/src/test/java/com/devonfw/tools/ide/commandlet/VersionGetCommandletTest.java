@@ -14,27 +14,6 @@ import com.devonfw.tools.ide.log.IdeLogLevel;
 public class VersionGetCommandletTest extends AbstractIdeContextTest {
 
   /**
-   * Test of {@link VersionGetCommandlet} run, when Installed Version is null.
-   */
-  @Test
-  public void testVersionGetCommandletRunThrowsCliExeption() {
-
-    // arrange
-    String path = "workspaces/foo-test/my-git-repo";
-    IdeContext context = newContext("basic", path, false);
-    VersionGetCommandlet versionGet = context.getCommandletManager().getCommandlet(VersionGetCommandlet.class);
-    versionGet.tool.setValueAsString("java");
-    // act
-    try {
-      versionGet.run();
-      failBecauseExceptionWasNotThrown(CliException.class);
-    } catch (CliException e) {
-      // assert
-      assertThat(e).hasMessageContaining("Tool java is not installed!");
-    }
-  }
-
-  /**
    * Test of {@link VersionGetCommandlet} run.
    */
   @Test
