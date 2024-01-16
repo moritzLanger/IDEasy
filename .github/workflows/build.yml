@@ -18,10 +18,13 @@ jobs:
           java-version: '17'
       - name: Build project with Maven
         run: mvn -B -ntp -Dstyle.color=always install
-      - name: Deploy to OSSRH nexus
-        env:
-          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-        run: mvn --settings .mvn/settings.xml -DskipTests=true -Darchetype.test.skip=true -Dmaven.install.skip=true -Dstyle.color=always -B -ntp deploy
       - name: Coveralls GitHub Action
         uses: coverallsapp/github-action@v2.2.3
+      - name: Notify dedicated teams channel
+        uses: jdcargile/ms-teams-notification@v1.3
+        with:
+          github-token: ${{ github.token }}
+          ms-teams-webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+          notification-summary: TestMessage
+          notification-color: 17a2b8
+          timezone: Europe/Berlin
