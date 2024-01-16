@@ -1,14 +1,17 @@
 package com.devonfw.tools.ide.url;
 
 import java.nio.file.Path;
+import java.sql.SQLOutput;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.format.DateTimeParseException;
 
+import com.devonfw.tools.ide.url.updater.UpdateState;
+import org.jline.utils.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import com.devonfw.tools.ide.url.updater.UpdateManager;
+import org.slf4j.event.Level;
 
 /**
  * This is the main program to run the updater of {@code ide-urls} repository. It is run nightly via an automated
@@ -17,19 +20,20 @@ import com.devonfw.tools.ide.url.updater.UpdateManager;
 public class UpdateInitiator {
   private static final Logger logger = LoggerFactory.getLogger(UpdateInitiator.class.getName());
 
+  private static final Logger updateLogger = LoggerFactory.getLogger(UpdateState.class);
+
   /**
    * @param args the command-line arguments. arg[0] points to the {@code ide-urls} repository. arg[1] defines a timeout
    * for GitHub actions in Duration string format.
    */
   public static void main(String[] args) {
 
-    if (args.length == 0) {
+/*    if (args.length == 0) {
       logger.error("Error: Missing path to repository as well as missing timeout as command line arguments.");
       logger.error("Usage: java UpdateInitiator <path_to_repository> <duration_string_format>");
       System.exit(1);
-    }
-
-    String pathToRepo = args[0];
+    }*/
+    String pathToRepo = "C:\\ideUrlsTest";//args[0];
     Instant expirationTime = null;
 
     if (args.length < 2) {

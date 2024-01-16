@@ -55,8 +55,9 @@ public class UpdateManager extends AbstractProcessorWithTimeout {
   private static final Logger logger = LoggerFactory.getLogger(AbstractUrlUpdater.class);
 
   private final UrlRepository urlRepository;
-
-  private final List<AbstractUrlUpdater> updaters = Arrays.asList(new AndroidStudioUrlUpdater(), new AwsUrlUpdater(),
+  private static final StringBuilder updateString = new StringBuilder();
+  private final List<AbstractUrlUpdater> updaters = Arrays.asList(new JmcUrlUpdater());
+    /*Arrays.asList(new AndroidStudioUrlUpdater(), new AwsUrlUpdater(),
       new AzureUrlUpdater(), new CobigenUrlUpdater(), new DockerDesktopUrlUpdater() , new DotNetUrlUpdater(), new EclipseCppUrlUpdater(),
       new EclipseJavaUrlUpdater(), new GCloudUrlUpdater(), new GcViewerUrlUpdater(), new GhUrlUpdater(),
       new GraalVmCommunityUpdater(), new GraalVmOracleUrlUpdater(), new GradleUrlUpdater(), new HelmUrlUpdater(), new IntellijUrlUpdater(),
@@ -64,7 +65,7 @@ public class UpdateManager extends AbstractProcessorWithTimeout {
       new LazyDockerUrlUpdater(), new MvnUrlUpdater(), new NodeUrlUpdater(), new NpmUrlUpdater(), new OcUrlUpdater(),
       new PipUrlUpdater(), new PythonUrlUpdater(), new QuarkusUrlUpdater(), new DockerRancherDesktopUrlUpdater(),
       new SonarUrlUpdater(), new TerraformUrlUpdater(), new TomcatUrlUpdater(), new VsCodeUrlUpdater());
-
+*/
   /**
    * The constructor.
    *

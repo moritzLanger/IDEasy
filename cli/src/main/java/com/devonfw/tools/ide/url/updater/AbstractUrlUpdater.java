@@ -70,6 +70,8 @@ public abstract class AbstractUrlUpdater extends AbstractProcessorWithTimeout im
 
   private static final Logger logger = LoggerFactory.getLogger(AbstractUrlUpdater.class);
 
+  private UpdateState updateState = new UpdateState();
+
   /**
    * @return the name of the {@link UrlTool tool} handled by this updater.
    */
@@ -261,9 +263,9 @@ public abstract class AbstractUrlUpdater extends AbstractProcessorWithTimeout im
     if (isSuccess(response)) {
       String contentType = response.headers().firstValue("content-type").orElse("undefined");
       boolean isValidContentType = isValidContentType(contentType);
-      if (!isValidContentType){
+      if (!isValidContentType) {
         logger.error("For tool {} and version {} the download has an invalid content type {} for URL {}", tool, version,
-        contentType, url);
+            contentType, url);
         return false;
       }
       return true;
@@ -273,7 +275,8 @@ public abstract class AbstractUrlUpdater extends AbstractProcessorWithTimeout im
   }
 
   /**
-   * Checks if the content type was not of type text (this method is required because {@link com.devonfw.tools.ide.tool.pip.PipUrlUpdater} returns text and needs to be overridden)
+   * Checks if the content type was not of type text (this method is required because
+   * {@link com.devonfw.tools.ide.tool.pip.PipUrlUpdater} returns text and needs to be overridden)
    * <p>
    * See: <a href="https://github.com/devonfw/ide/issues/1343">#1343</a> for reference.
    *
@@ -309,6 +312,7 @@ public abstract class AbstractUrlUpdater extends AbstractProcessorWithTimeout im
     if (urlDownloadFile != null) {
       UrlChecksum urlChecksum = urlVersion.getChecksum(urlDownloadFile.getName());
       if (urlChecksum != null) {
+        updateState.updateMinus();
         logger.warn("Checksum is already existing for: {}, skipping.", url);
         doUpdateStatusJson(success, statusCode, urlVersion, url, true);
         return true;
@@ -438,9 +442,9 @@ public abstract class AbstractUrlUpdater extends AbstractProcessorWithTimeout im
         status.setSuccess(new UrlStatusState());
         modified = true;
       }
-
-      logger.info("For tool {} and version {} the download verification succeeded with status code {} for URL {}.", tool,
-          version, code, url);
+      updateState.updateSuccessful();
+      logger.info("For tool {} and version {} the download verification succeeded with status code {} for URL {}.",
+          tool, version, code, url);
     } else {
       if (status != null) {
         if (errorStatus == null) {
@@ -464,6 +468,7 @@ public abstract class AbstractUrlUpdater extends AbstractProcessorWithTimeout im
           status.setError(errorStatus);
         }
       }
+      updateState.updateFailed(version);
       logger.warn("For tool {} and version {} the download verification failed with status code {} for URL {}.", tool,
           version, code, url);
     }
@@ -536,10 +541,12 @@ public abstract class AbstractUrlUpdater extends AbstractProcessorWithTimeout im
           addVersion(urlVersion);
           urlVersion.save();
         } catch (Exception e) {
+          updateState.updateFailed(version);
           logger.error("For tool {} we failed to add version {}.", toolWithEdition, version, e);
         }
       }
     }
+    updateState.log(getTool(), getEdition());
   }
 
   /**

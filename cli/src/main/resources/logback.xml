@@ -3,12 +3,25 @@
 <configuration>
   <import class="ch.qos.logback.classic.encoder.PatternLayoutEncoder"/>
   <import class="ch.qos.logback.core.ConsoleAppender"/>
+  <property name="LOGS_HOME" value="C:\Users\molanger\ide\workspaces\main\1219\IDEasy\cli\src\main\resources"/>
 
   <appender name="STDOUT" class="ConsoleAppender">
     <encoder class="PatternLayoutEncoder">
       <pattern>%-5level %logger{0} -%kvp- %msg%n</pattern>
     </encoder>
   </appender>
+
+
+  <appender name="UPDATE-LOG" class="ch.qos.logback.core.FileAppender">
+    <file>${LOGS_HOME}login.log</file>
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <Pattern>%n%date %d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n
+      </Pattern>
+    </encoder>
+  </appender>
+  <logger name="com.devonfw.tools.ide.url.updater.UpdateState" level="info" additivity="false">
+    <appender-ref ref="UPDATE-LOG"/>
+  </logger>
 
   <root level="debug">
     <appender-ref ref="STDOUT"/>
