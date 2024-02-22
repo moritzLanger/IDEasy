@@ -33,7 +33,7 @@ public class UpdateInitiator {
       logger.error("Usage: java UpdateInitiator <path_to_repository> <duration_string_format>");
       System.exit(1);
     }
-    String pathToRepo = "C:\\ideUrlsTest";//args[0];
+    String pathToRepo = args[0];
     Instant expirationTime = null;
 
     if (args.length < 2) {
