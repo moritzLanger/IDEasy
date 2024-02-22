@@ -32,7 +32,7 @@ jobs:
         id: getLogContent
         uses: andstor/file-reader-action@v1
         with:
-          path: "/home/runner/work/IDEasy/IDEasy/cli/src/main/resources/logfile.log"
+          path: "/home/runner/work/IDEasy/IDEasy/cli/target/src/main/resources/logfile.log"
       - name: Send a message to Microsoft Teams
         uses: aliencube/microsoft-teams-actions@v0.8.0
         with:
