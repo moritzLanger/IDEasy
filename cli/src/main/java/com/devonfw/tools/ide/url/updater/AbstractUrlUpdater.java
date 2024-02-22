@@ -16,6 +16,8 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 
+import com.devonfw.tools.ide.url.model.folder.UrlErrorReport;
+import com.devonfw.tools.ide.url.model.folder.UrlErrorState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,7 +72,8 @@ public abstract class AbstractUrlUpdater extends AbstractProcessorWithTimeout im
 
   private static final Logger logger = LoggerFactory.getLogger(AbstractUrlUpdater.class);
 
-  private UpdateState updateState = new UpdateState();
+  protected UrlErrorState urlErrorState = UrlErrorReport.getErrorState(getToolWithEdition());
+
 
   /**
    * @return the name of the {@link UrlTool tool} handled by this updater.
@@ -312,8 +315,8 @@ public abstract class AbstractUrlUpdater extends AbstractProcessorWithTimeout im
     if (urlDownloadFile != null) {
       UrlChecksum urlChecksum = urlVersion.getChecksum(urlDownloadFile.getName());
       if (urlChecksum != null) {
-        updateState.updateMinus();
         logger.warn("Checksum is already existing for: {}, skipping.", url);
+        urlErrorState.subtractVerification();
         doUpdateStatusJson(success, statusCode, urlVersion, url, true);
         return true;
       }
@@ -442,9 +445,9 @@ public abstract class AbstractUrlUpdater extends AbstractProcessorWithTimeout im
         status.setSuccess(new UrlStatusState());
         modified = true;
       }
-      updateState.updateSuccessful();
       logger.info("For tool {} and version {} the download verification succeeded with status code {} for URL {}.",
           tool, version, code, url);
+      urlErrorState.updateVerifications(true, version);
     } else {
       if (status != null) {
         if (errorStatus == null) {
@@ -468,9 +471,9 @@ public abstract class AbstractUrlUpdater extends AbstractProcessorWithTimeout im
           status.setError(errorStatus);
         }
       }
-      updateState.updateFailed(version);
       logger.warn("For tool {} and version {} the download verification failed with status code {} for URL {}.", tool,
           version, code, url);
+      urlErrorState.updateVerifications(false, version);
     }
     if (modified) {
       urlStatusFile.setStatusJson(statusJson); // hack to set modified (better solution welcome)
@@ -539,14 +542,14 @@ public abstract class AbstractUrlUpdater extends AbstractProcessorWithTimeout im
         try {
           urlVersion = edition.getOrCreateChild(version);
           addVersion(urlVersion);
+          urlErrorState.updateAdditions(true, version);
           urlVersion.save();
         } catch (Exception e) {
-          updateState.updateFailed(version);
+          urlErrorState.updateAdditions(false, version);
           logger.error("For tool {} we failed to add version {}.", toolWithEdition, version, e);
         }
       }
     }
-    updateState.log(getTool(), getEdition());
   }
 
   /**

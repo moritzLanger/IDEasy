@@ -6,7 +6,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.format.DateTimeParseException;
 
-import com.devonfw.tools.ide.url.updater.UpdateState;
+import com.devonfw.tools.ide.url.model.folder.UrlErrorReport;
 import org.jline.utils.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +20,7 @@ import org.slf4j.event.Level;
 public class UpdateInitiator {
   private static final Logger logger = LoggerFactory.getLogger(UpdateInitiator.class.getName());
 
-  private static final Logger updateLogger = LoggerFactory.getLogger(UpdateState.class);
+  private static final Logger updateLogger = LoggerFactory.getLogger(UrlErrorReport.class);
 
   /**
    * @param args the command-line arguments. arg[0] points to the {@code ide-urls} repository. arg[1] defines a timeout
@@ -28,11 +28,11 @@ public class UpdateInitiator {
    */
   public static void main(String[] args) {
 
-/*    if (args.length == 0) {
+    if (args.length == 0) {
       logger.error("Error: Missing path to repository as well as missing timeout as command line arguments.");
       logger.error("Usage: java UpdateInitiator <path_to_repository> <duration_string_format>");
       System.exit(1);
-    }*/
+    }
     String pathToRepo = "C:\\ideUrlsTest";//args[0];
     Instant expirationTime = null;
 
@@ -58,5 +58,7 @@ public class UpdateInitiator {
 
     UpdateManager updateManager = new UpdateManager(repoPath, expirationTime);
     updateManager.updateAll();
+
+    updateLogger.info(UrlErrorReport.getReport());
   }
 }

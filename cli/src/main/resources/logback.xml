@@ -13,13 +13,13 @@
 
 
   <appender name="UPDATE-LOG" class="ch.qos.logback.core.FileAppender">
-    <file>${LOGS_HOME}login.log</file>
+    <param name="Append" value="false" />
+    <file>${LOGS_HOME}/logfile.log</file>
     <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-      <Pattern>%n%date %d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n
-      </Pattern>
+      <Pattern>%msg%n</Pattern>
     </encoder>
   </appender>
-  <logger name="com.devonfw.tools.ide.url.updater.UpdateState" level="info" additivity="false">
+  <logger name="com.devonfw.tools.ide.url.model.folder.UrlErrorReport" level="info" additivity="false">
     <appender-ref ref="UPDATE-LOG"/>
   </logger>
 
