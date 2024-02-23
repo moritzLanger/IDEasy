@@ -25,7 +25,7 @@ jobs:
         run: |
           cd cli
           mvn -B -ntp -Dstyle.color=always install
-          mvn -B -ntp -Dstyle.color=always exec:java -Dexec.mainClass="com.devonfw.tools.ide.url.UpdateInitiator" -Dexec.args="../ide-urls PT5H30M" | tee log.txt
+          mvn -B -ntp -Dstyle.color=always exec:java -Dexec.mainClass="com.devonfw.tools.ide.url.UpdateInitiator" -Dexec.args="../ide-urls PT5H30M"
       - name: Read log file
         id: getLogContent
         uses: andstor/file-reader-action@v1
