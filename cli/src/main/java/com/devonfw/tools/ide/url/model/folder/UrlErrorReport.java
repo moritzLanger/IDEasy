@@ -35,7 +35,7 @@ public class UrlErrorReport {
 
   public static String getReport() {
     StringBuilder report = new StringBuilder();
-    report.append("ERROR REPORT FROM: ").append(LocalDateTime.now()).append("\n");
+    report.append("\nERROR REPORT FROM: ").append(LocalDateTime.now()).append("\n");
     for (UrlErrorState state : urlErrorStates) {
       if (!state.getAdditionFailures().isEmpty() || !state.getVerificationFailures().isEmpty()){
       report.append(state.toString()).append("\n");
