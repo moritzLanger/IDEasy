@@ -25,12 +25,14 @@ jobs:
         run: |
           cd cli
           mvn -B -ntp -Dstyle.color=always install
-          mvn -B -ntp -Dstyle.color=always exec:java -Dexec.mainClass="com.devonfw.tools.ide.url.UpdateInitiator" -Dexec.args="../ide-urls PT5H30M"
+          mvn -B -ntp -Dstyle.color=always exec:java -Dexec.mainClass="com.devonfw.tools.ide.url.UpdateInitiator" -Dexec.args="../ide-urls PT5H30M"| tee log.txt
+          sed -n '/ERROR REPORT FROM/,/ERROR REPORT ENDS/p' log.txt > error_report.txt
+          cat error_report.txt
       - name: Read log file
         id: getLogContent
         uses: andstor/file-reader-action@v1
         with:
-          path: "./target/classes/logfile.log"
+          path: "error_report.txt"
       - name: Send a message to Microsoft Teams
         uses: aliencube/microsoft-teams-actions@v0.8.0
         with:
