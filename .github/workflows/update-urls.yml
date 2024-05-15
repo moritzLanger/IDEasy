@@ -29,12 +29,12 @@ jobs:
           sed -n '/ERROR REPORT FROM/,/ERROR REPORT ENDS/p' log.txt > error_report.txt
           cat error_report.txt
       - name: ls
-        run: ls -lD
+        run: ls -lR
       - name: Read log file
         id: getLogContent
         uses: andstor/file-reader-action@v1
         with:
-          path: "./cli/logfile.log"
+          path: "./cli/logs/logfile.log"
       - name: Send a message to Microsoft Teams
         uses: aliencube/microsoft-teams-actions@v0.8.0
         with:
