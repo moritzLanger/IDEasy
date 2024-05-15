@@ -28,8 +28,6 @@ jobs:
           mvn -B -ntp -Dstyle.color=always exec:java -Dexec.mainClass="com.devonfw.tools.ide.url.UpdateInitiator" -Dexec.args="../ide-urls PT5H30M"| tee log.txt
           sed -n '/ERROR REPORT FROM/,/ERROR REPORT ENDS/p' log.txt > error_report.txt
           cat error_report.txt
-      - name: ls
-        run: ls -lR
       - name: Read log file
         id: getLogContent
         uses: andstor/file-reader-action@v1
