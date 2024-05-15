@@ -3,7 +3,7 @@
 <configuration>
   <import class="ch.qos.logback.classic.encoder.PatternLayoutEncoder"/>
   <import class="ch.qos.logback.core.ConsoleAppender"/>
-  <property name="LOGS_HOME" value="C:\Users\molanger\ide\workspaces\main\1219\IDEasy\cli\src\main\resources"/>
+  <property name="LOGS_HOME" value="/src/main/resources"/>
 
   <appender name="STDOUT" class="ConsoleAppender">
     <encoder class="PatternLayoutEncoder">
