@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration>
 <configuration>
+
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
     <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
       <Pattern>%d{HH:mm:ss.SSS} [%thread] - %-5level - %logger{36} - %msg%n
       </Pattern>
     </encoder>
   </appender>
+
+  <property name="LOGS_HOME" value= "./logs/"/>
+  <appender name="UPDATE-LOG" class="ch.qos.logback.core.FileAppender">
+    <param name="Append" value="false" />
+    <file>${LOGS_HOME}/logfile.log</file>
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <Pattern>%msg%n</Pattern>
+    </encoder>
+  </appender>
+  <logger name="com.devonfw.tools.ide.url.model.folder.UrlErrorReport" level="info" additivity="false">
+    <appender-ref ref="UPDATE-LOG"/>
+  </logger>
 
   <root level="INFO">
     <appender-ref ref="STDOUT"/>

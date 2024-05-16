@@ -28,6 +28,8 @@ import com.devonfw.tools.ide.url.model.file.UrlStatusFile;
 import com.devonfw.tools.ide.url.model.file.json.StatusJson;
 import com.devonfw.tools.ide.url.model.file.json.UrlStatus;
 import com.devonfw.tools.ide.url.model.file.json.UrlStatusState;
+import com.devonfw.tools.ide.url.model.folder.UrlErrorReport;
+import com.devonfw.tools.ide.url.model.folder.UrlErrorState;
 import com.devonfw.tools.ide.url.model.folder.UrlEdition;
 import com.devonfw.tools.ide.url.model.folder.UrlRepository;
 import com.devonfw.tools.ide.url.model.folder.UrlTool;
@@ -69,6 +71,9 @@ public abstract class AbstractUrlUpdater extends AbstractProcessorWithTimeout im
   protected final HttpClient client = HttpClient.newBuilder().followRedirects(Redirect.ALWAYS).build();
 
   private static final Logger logger = LoggerFactory.getLogger(AbstractUrlUpdater.class);
+
+  protected UrlErrorState urlErrorState = UrlErrorReport.getErrorState(getToolWithEdition());
+
 
   /**
    * @return the name of the {@link UrlTool tool} handled by this updater.
@@ -311,6 +316,7 @@ public abstract class AbstractUrlUpdater extends AbstractProcessorWithTimeout im
       UrlChecksum urlChecksum = urlVersion.getChecksum(urlDownloadFile.getName());
       if (urlChecksum != null) {
         logger.warn("Checksum is already existing for: {}, skipping.", url);
+        urlErrorState.subtractVerification();
         doUpdateStatusJson(success, statusCode, urlVersion, url, true);
         return true;
       }
@@ -442,6 +448,7 @@ public abstract class AbstractUrlUpdater extends AbstractProcessorWithTimeout im
 
       logger.info("For tool {} and version {} the download verification succeeded with status code {} for URL {}.", tool,
           version, code, url);
+      urlErrorState.updateVerifications(true, version);
     } else {
       if (status != null) {
         if (errorStatus == null) {
@@ -467,6 +474,7 @@ public abstract class AbstractUrlUpdater extends AbstractProcessorWithTimeout im
       }
       logger.warn("For tool {} and version {} the download verification failed with status code {} for URL {}.", tool,
           version, code, url);
+      urlErrorState.updateVerifications(false, version);
     }
     if (modified) {
       urlStatusFile.setStatusJson(statusJson); // hack to set modified (better solution welcome)
@@ -535,8 +543,10 @@ public abstract class AbstractUrlUpdater extends AbstractProcessorWithTimeout im
         try {
           urlVersion = edition.getOrCreateChild(version);
           addVersion(urlVersion);
+          urlErrorState.updateAdditions(true, version);
           urlVersion.save();
         } catch (Exception e) {
+          urlErrorState.updateAdditions(false, version);
           logger.error("For tool {} we failed to add version {}.", toolWithEdition, version, e);
         }
       }
