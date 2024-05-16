@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.devonfw.tools.ide.url.model.folder.UrlErrorReport;
 
 import com.devonfw.tools.ide.tool.androidstudio.AndroidStudioUrlUpdater;
 import com.devonfw.tools.ide.tool.aws.AwsUrlUpdater;
@@ -57,6 +58,8 @@ public class UpdateManager extends AbstractProcessorWithTimeout {
 
   private static final Logger logger = LoggerFactory.getLogger(AbstractUrlUpdater.class);
 
+  private static final Logger updateLogger = LoggerFactory.getLogger(UrlErrorReport.class);
+
   private final UrlRepository urlRepository;
 
   private final List<AbstractUrlUpdater> updaters = Arrays.asList(new AndroidStudioUrlUpdater(), new AwsUrlUpdater(),
@@ -94,6 +97,8 @@ public class UpdateManager extends AbstractProcessorWithTimeout {
       try {
         updater.setExpirationTime(getExpirationTime());
         updater.update(this.urlRepository);
+        updateLogger.info(UrlErrorReport.getReport());
+
       } catch (Exception e) {
         logger.error("Failed to update {}", updater.getToolWithEdition(), e);
       }

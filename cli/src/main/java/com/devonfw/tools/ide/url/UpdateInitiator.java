@@ -18,8 +18,6 @@ import com.devonfw.tools.ide.url.updater.UpdateManager;
 public class UpdateInitiator {
   private static final Logger logger = LoggerFactory.getLogger(UpdateInitiator.class.getName());
 
-  private static final Logger updateLogger = LoggerFactory.getLogger(UrlErrorReport.class);
-
 
   /**
    * @param args the command-line arguments. arg[0] points to the {@code ide-urls} repository. arg[1] defines a timeout
@@ -58,7 +56,5 @@ public class UpdateInitiator {
 
     UpdateManager updateManager = new UpdateManager(repoPath, expirationTime);
     updateManager.updateAll();
-
-    updateLogger.info(UrlErrorReport.getReport());
   }
 }
