@@ -105,7 +105,7 @@ public final class UrlErrorState {
         + getTotalAdditions() + " total, " + getErrorRate(getAdditionFailures().size(), getTotalAdditions()) + "% error. Failed versions list: " + getAdditionFailures();
 
     String verificationState = " - versions verified: " + getVerificationFailures().size() + " failed, " + getVerificationSuccesses() +
-        " succeeded, " + getTotalVerification() + " total, " + getErrorRate(getVerificationFailures().size(), getTotalVerification()) + "% error. Failed versions list:" + getVerificationFailures() + System.lineSeparator();
+        " succeeded, " + getTotalVerification() + " total, " + getErrorRate(getVerificationFailures().size(), getTotalVerification()) + "% error. Failed verification versions list:" + getVerificationFailures() + System.lineSeparator() + System.lineSeparator();
 
     return getToolWithEdition() + ": " + additionState + verificationState;
   }
