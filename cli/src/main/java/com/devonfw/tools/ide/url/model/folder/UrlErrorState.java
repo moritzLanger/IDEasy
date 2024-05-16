@@ -102,7 +102,7 @@ public final class UrlErrorState {
   public String toString() {
 
     String additionState = "versions added: " + getAdditionFailures().size() + " failed, " + getAdditionSuccesses() + " succeeded, "
-        + getTotalAdditions() + " total, " + getErrorRate(getAdditionFailures().size(), getTotalAdditions()) + "% error. Failed versions list: " + getAdditionFailures();
+        + getTotalAdditions() + " total, " + getErrorRate(getAdditionFailures().size(), getTotalAdditions()) + "% error. Failed versions list: " + getAdditionFailures()+ System.lineSeparator() + System.lineSeparator();
 
     /*String verificationState = " - versions verified: " + getVerificationFailures().size() + " failed, " + getVerificationSuccesses() +
         " succeeded, " + getTotalVerification() + " total, " + getErrorRate(getVerificationFailures().size(), getTotalVerification()) + "% error. Failed verification versions list:" + getVerificationFailures() + System.lineSeparator() + System.lineSeparator();
